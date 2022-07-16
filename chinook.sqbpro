@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/0/Downloads/project/chinook_db/chinook.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="3954"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,5:mainAlbum"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="q1">select c.FirstName,i.BillingCity, sum(i.total) 'most toatl $'
+ from Invoice i
+ JOIN Customer c
+ on c.CustomerId = i.CustomerId
+ group by 1 , 2
+ order by 3 DESC
+ limit 10 ;
+</sql><sql name="Question 2">select c.Email,c.FirstName, c.LastName,  g.Name 'Genre' , count(g.Name) 'genre listend times'
+FROM Customer c
+join Invoice i
+on c.CustomerId = i.CustomerId
+JOIN InvoiceLine l
+on i.InvoiceId = l.InvoiceId
+join Track t
+on t.TrackId = l.TrackId
+join Genre g
+on g.GenreId = t.GenreId
+where g.Name = 'Rock'
+GROUP by 2,3
+ORDER by 1;</sql><sql name="Q3">SELECT a.ArtistId, a.Name, count(a.Name) as songs 
+from Artist a
+join Album m
+on a.ArtistId = m.ArtistId
+join Track t
+on m.AlbumId = t.AlbumId
+join Genre g
+on g.GenreId = t.GenreId
+WHERE g.Name = 'Rock'
+group by a.Name
+order by songs DESC
+limit 10;</sql><sql name="q 4">SELECT *
+ FROM
+ (SELECT C.CUSTOMERID,C.FIRSTNAME, C.LASTNAME  ,SUM(L.UNITPRICE*l.Quantity) AS TOTAL
+FROM CUSTOMER C
+JOIN INVOICE I
+ON I.CUSTOMERID = C.CUSTOMERID
+JOIN INVOICELINE L 
+ON L.INVOICEID = I.INVOICEID
+JOIN TRACK T 
+ON T.TRACKID = L.TRACKID
+WHERE COUNTRY =  'France'
+GROUP BY 1
+ORDER BY 4 DESC);</sql><current_tab id="3"/></tab_sql></sqlb_project>
